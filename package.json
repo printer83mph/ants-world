@@ -1,0 +1,12 @@
+{
+  "name": "ants-world",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "printer83mph",
+  "license": "MIT",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "private": true
+}

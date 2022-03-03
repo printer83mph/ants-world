@@ -1,12 +1,13 @@
-const express = require('express')
-const AntSim = require('../models/ant-sim')
+import express from 'express'
+import AntSim from '../models/ant-sim'
 
 const TICK = 100
 
 const TableRouter = express.Router()
-const listeners = []
+const listeners: ((data: string) => any)[] = []
 
-const antSim = new AntSim({})
+const antSim = new AntSim()
+// TODO: saving / loading ant sim from persistent storage
 
 setInterval(() => {
   antSim.update(TICK)
@@ -21,4 +22,4 @@ TableRouter.get('/', (req, res) => {
   })
 })
 
-module.exports = TableRouter
+export default TableRouter

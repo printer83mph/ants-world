@@ -1,8 +1,13 @@
-const createError = require('http-errors')
-const express = require('express')
-const path = require('path')
-const cookieParser = require('cookie-parser')
-const logger = require('morgan')
+import createError from 'http-errors'
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
+
+// serve static stuff from public
+// app.use(express.static(path.join(__dirname, 'public')))
+
+// routers
+import TableRouter from './routes/table'
 
 const app = express()
 
@@ -10,12 +15,6 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-
-// serve static stuff from public
-// app.use(express.static(path.join(__dirname, 'public')))
-
-// routers
-const TableRouter = require('./routes/table')
 
 app.use('/table', TableRouter)
 
@@ -35,4 +34,4 @@ app.use((req, res) => {
 //   res.render('error')
 // })
 
-module.exports = app
+export default app

@@ -3,4 +3,4 @@ function Ant(position) {
 }
 // TODO: ant stats here
 
-module.exports = Ant
+export default Ant

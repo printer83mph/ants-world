@@ -10,7 +10,7 @@ const useTableZoom = (tableRef: React.RefObject<HTMLDivElement>) => {
   const zoomRef = useRef<Zoom>({ scale: 1, x: 0, y: 0 })
 
   const updateZoom = useCallback(() => {
-    tableRef.current!.style.transform = `scale(${zoomRef.current.scale}) translate(${zoomRef.current.x}, ${zoomRef.current.y})`
+    tableRef.current!.style.transform = `scale(${zoomRef.current.scale}) translate(${zoomRef.current.x}px, ${zoomRef.current.y}px)`
   }, [tableRef, zoomRef])
 
   const setZoom = useCallback(
@@ -33,6 +33,7 @@ const useTableZoom = (tableRef: React.RefObject<HTMLDivElement>) => {
   const zoom = useCallback(
     (scale: number) => {
       zoomRef.current.scale *= scale
+      updateZoom()
     },
     [zoomRef]
   )

@@ -3,7 +3,7 @@ export type Vector2 = {
   y: number
 }
 
-export interface AntData {
+export interface ClientAntData {
   position: Vector2
   id: string
 }

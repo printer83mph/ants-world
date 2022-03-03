@@ -4,22 +4,27 @@ import AntSim from '../models/ant-sim'
 const TICK = 100
 
 const TableRouter = express.Router()
-const listeners: ((data: string) => any)[] = []
+const listeners = []
 
-const antSim = new AntSim()
+const { update } = AntSim()
 // TODO: saving / loading ant sim from persistent storage
 
 setInterval(() => {
-  antSim.update(TICK)
-  const antsData = JSON.stringify(antSim.state)
-  listeners.forEach((listener) => listener(antsData))
+  const antsData = JSON.stringify(update(TICK))
+  listeners.forEach((listener) => {
+    listener(antsData)
+  })
 }, TICK)
 
-TableRouter.get('/', (req, res) => {
-  listeners.push(res.write)
-  req.on('close', () => {
-    listeners.splice(listeners.indexOf(res.write), 1)
+TableRouter.ws('/', function (ws, res) {
+  console.log('connection opened!')
+
+  listeners.push((data) => ws.send(data))
+
+  ws.on('close', function () {
+    console.log('connection closed!')
+    listeners.splice(listeners.indexOf(ws.send), 1)
   })
 })
 
-export default TableRouter
+module.exports = TableRouter

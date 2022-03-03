@@ -6,17 +6,15 @@ import logger from 'morgan'
 // serve static stuff from public
 // app.use(express.static(path.join(__dirname, 'public')))
 
-// routers
-import TableRouter from './routes/table'
-
 const app = express()
+require('express-ws')(app)
 
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-app.use('/table', TableRouter)
+app.use('/table', require('./routes/table'))
 
 // catch 404 and forward to error handler
 app.use((req, res) => {

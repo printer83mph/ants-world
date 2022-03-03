@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 // serve static stuff from public
-app.use(express.static(path.join(__dirname, 'public')))
+// app.use(express.static(path.join(__dirname, 'public')))
 
 // routers
 const TableRouter = require('./routes/table')

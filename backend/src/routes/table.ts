@@ -11,7 +11,7 @@ const antSim = new AntSim()
 
 setInterval(() => {
   antSim.update(TICK)
-  const antsData = JSON.stringify(antSim.ants)
+  const antsData = JSON.stringify(antSim.state)
   listeners.forEach((listener) => listener(antsData))
 }, TICK)
 

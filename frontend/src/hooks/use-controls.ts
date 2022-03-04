@@ -18,7 +18,6 @@ const useControls = (
 
   const handleScroll = useCallback(
     (evt: WheelEvent) => {
-      console.log('hahaha')
       onZoom(evt.deltaY)
     },
     [onZoom]
@@ -28,7 +27,6 @@ const useControls = (
     (evt: KeyboardEvent) => {
       if (keysDown.current.indexOf(evt.key) !== -1) return
       keysDown.current.push(evt.key)
-      console.log(keysDown.current)
     },
     [keysDown]
   )
@@ -55,14 +53,13 @@ const useControls = (
   }, [keysDown, onPan])
 
   useEffect(() => {
-    ref.current?.focus()
-    ref.current!.addEventListener('wheel', handleScroll)
-    console.log('troll')
+    const current = ref.current!
+    current.addEventListener('wheel', handleScroll)
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
     const handle = setInterval(updatePan, 16)
     return () => {
-      ref.current!.removeEventListener('wheel', handleScroll)
+      current.removeEventListener('wheel', handleScroll)
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
       clearInterval(handle)

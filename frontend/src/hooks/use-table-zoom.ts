@@ -28,6 +28,8 @@ const useTableZoom = (
   const zoomRef = useRef<Zoom>({ scale: 1, x: 0, y: 0 })
 
   const updateZoom = useCallback(() => {
+    // we gotta update the style without big rerenders and such
+    // eslint-disable-next-line no-param-reassign
     tableRef.current!.style.transform = `scale(${zoomRef.current.scale}) translate(${zoomRef.current.x}px, ${zoomRef.current.y}px)`
   }, [tableRef, zoomRef])
 
@@ -36,7 +38,7 @@ const useTableZoom = (
       zoomRef.current = { ...zoomRef.current, ...newZoom }
       updateZoom()
     },
-    [zoomRef]
+    [zoomRef, updateZoom]
   )
 
   const translate = useCallback(
@@ -49,7 +51,7 @@ const useTableZoom = (
       zoomRef.current.y = Math.max(Math.min(zoomRef.current.y - y, maxY), minY)
       updateZoom()
     },
-    [zoomRef]
+    [zoomRef, options, updateZoom]
   )
 
   const frame = useCallback(
@@ -57,7 +59,7 @@ const useTableZoom = (
       zoomRef.current.x = options.maxBounds.x - x
       zoomRef.current.y = options.maxBounds.y - y
     },
-    [zoomRef]
+    [zoomRef, options]
   )
 
   const zoom = useCallback(
@@ -69,7 +71,7 @@ const useTableZoom = (
       )
       updateZoom()
     },
-    [zoomRef]
+    [zoomRef, options, updateZoom]
   )
 
   // TODO: maybe a "frame" function

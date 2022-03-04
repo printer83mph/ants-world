@@ -1,5 +1,3 @@
-const StatsPage = () => {
-  return <div>Stats</div>
-}
+const StatsPage = () => <div>Stats</div>
 
 export default StatsPage

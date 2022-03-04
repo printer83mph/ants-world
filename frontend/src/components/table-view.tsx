@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import useControls from '../hooks/use-controls'
 import useLiveData from '../hooks/use-live-data'
 import useTableZoom from '../hooks/use-table-zoom'
@@ -8,7 +8,7 @@ import Ant from './ant'
 const TableView = () => {
   const tableRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { setZoom, translate, zoom } = useTableZoom(tableRef)
+  const { translate, zoom } = useTableZoom(tableRef)
 
   const [ants, setAnts] = useState<ClientAntData[]>([
     {

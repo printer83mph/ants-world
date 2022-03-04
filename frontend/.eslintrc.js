@@ -2,7 +2,7 @@ module.exports = {
   extends: ['airbnb-base', 'prettier'],
   overrides: [
     {
-      files: ['src/*.tsx', 'src/*.ts'],
+      files: ['src/**/*.tsx', 'src/**/*.ts'],
       env: {
         browser: true,
         es2021: true,

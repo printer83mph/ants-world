@@ -11,7 +11,7 @@ const useLiveData = (callback: (data: any) => any) => {
     return () => {
       ws.close()
     }
-  }, [])
+  }, [callback])
 }
 
 export default useLiveData

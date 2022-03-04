@@ -1,11 +1,9 @@
 import TableView from '../components/table-view'
 
-const HomePage = () => {
-  return (
-    <div>
-      <TableView />
-    </div>
-  )
-}
+const HomePage = () => (
+  <div>
+    <TableView />
+  </div>
+)
 
 export default HomePage

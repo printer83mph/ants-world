@@ -16,15 +16,15 @@ setInterval(() => {
   })
 }, TICK)
 
-TableRouter.ws('/', function (ws, res) {
+TableRouter.ws('/', (ws) => {
   console.log('connection opened!')
 
   listeners.push((data) => ws.send(data))
 
-  ws.on('close', function () {
+  ws.on('close', () => {
     console.log('connection closed!')
     listeners.splice(listeners.indexOf(ws.send), 1)
   })
 })
 
-module.exports = TableRouter
+export default TableRouter

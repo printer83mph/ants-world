@@ -7,7 +7,7 @@ module.exports = {
   extends: ['airbnb/base', 'prettier'],
   overrides: [
     {
-      files: ['src/*.ts'],
+      files: ['src/**/*.ts'],
       extends: ['airbnb/base', 'airbnb-typescript/base', 'prettier'],
       parserOptions: {
         ecmaVersion: 'latest',

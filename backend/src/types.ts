@@ -3,14 +3,14 @@ export type Vector2 = {
   y: number
 }
 
-export type Ant = {
+export type AntState = {
   position: Vector2
   angle: number
   id: string
 }
 
 export interface AntSimState {
-  ants: Ant[]
+  ants: AntState[]
 }
 
 export interface AntSimConfig {

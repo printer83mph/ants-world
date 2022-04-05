@@ -54,6 +54,14 @@ const useTableZoom = (
     [zoomRef, options, updateZoom]
   )
 
+  const pan = useCallback(
+    (x: number, y: number) => {
+      const inverseZoom = 1 / zoomRef.current.scale
+      translate(x * inverseZoom, y * inverseZoom)
+    },
+    [translate]
+  )
+
   const frame = useCallback(
     (x: number, y: number) => {
       zoomRef.current.x = options.maxBounds.x - x
@@ -76,7 +84,7 @@ const useTableZoom = (
 
   // TODO: maybe a "frame" function
 
-  return { setZoom, translate, zoom, frame }
+  return { setZoom, translate, pan, zoom, frame }
 }
 
 export default useTableZoom

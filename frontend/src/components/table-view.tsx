@@ -8,7 +8,7 @@ import Ant from './ant'
 const TableView = () => {
   const tableRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const { translate, zoom } = useTableZoom(tableRef)
+  const { pan, zoom } = useTableZoom(tableRef)
 
   const [ants, setAnts] = useState<ClientAntData[]>([
     {
@@ -17,9 +17,11 @@ const TableView = () => {
     },
   ])
 
-  useLiveData((data: { ants: ClientAntData[] }) => {
-    setAnts(data.ants)
-  })
+  useLiveData(
+    useCallback((data: { ants: ClientAntData[] }) => {
+      setAnts(data.ants)
+    }, [])
+  )
 
   useControls(
     containerRef,
@@ -31,9 +33,9 @@ const TableView = () => {
     ),
     useCallback(
       (dx, dy) => {
-        translate(dx * 2, dy * 2)
+        pan(dx * 4, dy * 4)
       },
-      [translate]
+      [pan]
     )
   )
 

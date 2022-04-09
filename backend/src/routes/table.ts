@@ -6,11 +6,13 @@ const TICK = 100
 const TableRouter = express.Router()
 const listeners = []
 
-const { update } = AntSim()
+const antSim = new AntSim()
 // TODO: saving / loading ant sim from persistent storage
 
 setInterval(() => {
-  const antsData = JSON.stringify(update(TICK))
+  antSim.update(TICK)
+  const liveData = antSim.toLive()
+  const antsData = JSON.stringify(liveData)
   listeners.forEach((listener) => {
     listener(antsData)
   })

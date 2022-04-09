@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const useLiveData = (callback: (data: any) => any) => {
+const useLiveData = <T>(callback: (data: T) => any) => {
   useEffect(() => {
     const ws = new WebSocket(`ws://${window.location.host}/api/table`)
 

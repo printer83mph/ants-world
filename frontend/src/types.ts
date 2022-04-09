@@ -3,7 +3,13 @@ export type Vector2 = {
   y: number
 }
 
-export interface ClientAntData {
+export type LiveAnt = {
   position: Vector2
   id: string
+}
+
+export type LiveData = {
+  ants: LiveAnt[]
+  pheremones: { position: Vector2 }
+  crumbs: { position: Vector2 }
 }

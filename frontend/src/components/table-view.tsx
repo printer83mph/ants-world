@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import useControls from '../hooks/use-controls'
 import useLiveData from '../hooks/use-live-data'
 import useTableZoom from '../hooks/use-table-zoom'
-import { ClientAntData } from '../types'
+import { LiveData } from '../types'
 import Ant from './ant'
 
 const TableView = () => {
@@ -10,17 +10,17 @@ const TableView = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const { pan, zoom } = useTableZoom(tableRef)
 
-  const [ants, setAnts] = useState<ClientAntData[]>([
-    {
-      position: { x: 10, y: 40 },
-      id: 'ant1',
-    },
-  ])
+  const [liveData, setLiveData] = useState<
+    { loading: true } | (LiveData & { loading: boolean })
+  >({ loading: true })
 
-  useLiveData(
-    useCallback((data: { ants: ClientAntData[] }) => {
-      setAnts(data.ants)
-    }, [])
+  useLiveData<LiveData>(
+    useCallback(
+      (newLiveData) => {
+        setLiveData({ ...newLiveData, loading: false })
+      },
+      [setLiveData]
+    )
   )
 
   useControls(
@@ -39,19 +39,23 @@ const TableView = () => {
     )
   )
 
+  const { loading, ants, crumbs, pheremones } = liveData
+
   return (
     <div
       className="absolute w-screen h-screen flex flex-col justify-center items-center overflow-hidden"
       ref={containerRef}
     >
-      <div
-        className="relative w-[500px] h-[300px] bg-[linear-gradient(black,gray)]"
-        ref={tableRef}
-      >
-        {ants.map((ant) => (
-          <Ant data={ant} key={ant.id} />
-        ))}
-      </div>
+      {loading || (
+        <div
+          className="relative w-[500px] h-[300px] bg-[linear-gradient(black,gray)]"
+          ref={tableRef}
+        >
+          {ants.map((ant) => (
+            <Ant data={ant} key={ant.id} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
-import { ClientAntData } from '../types'
+import { LiveAnt } from '../types'
 
 export interface AntProps {
-  data: ClientAntData
+  data: LiveAnt
 }
 
 const Ant = ({ data }: AntProps) => {

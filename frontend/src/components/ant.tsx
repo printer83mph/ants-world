@@ -1,35 +1,33 @@
-import { useEffect, useRef } from 'react'
-import { LiveAnt } from '../types'
+import { useCallback, useEffect, useRef } from 'react'
+import { LiveData } from '../types'
 
 export interface AntProps {
-  data: LiveAnt
+  liveData: LiveData
+  id: string
 }
 
-const Ant = ({ data }: AntProps) => {
+const Ant = ({ liveData, id }: AntProps) => {
   const antRef = useRef<HTMLDivElement>(null)
-  // const antDataRef = useRef<ClientAntData>(initialData)
 
-  // const updateAntDisplay = () => {
-  //   antRef.current!.style.left = `${antDataRef.current!.position.x}px`
-  //   antRef.current!.style.top = `${antDataRef.current!.position.y}px`
-  // }
+  const updateAntDisplay = useCallback((x: number, y: number) => {
+    antRef.current!.style.left = `${x}px`
+    antRef.current!.style.top = `${y}px`
+  }, [])
 
   useEffect(() => {
-    // updateAntDisplay()
-    // setInterval(() => {
-    //   antDataRef.current.position.x += 1
-    //   updateAntDisplay()
-    // }, 200)
-  }, [])
+    const iv = setInterval(() => {
+      const ant = liveData.ants.find(({ id: antId }) => antId === id)
+      // TODO: optimize this LOL
+      if (!ant) return
+      updateAntDisplay(ant.position.x, ant.position.y)
+    }, 20)
+    return () => clearInterval(iv)
+  }, [id, liveData, updateAntDisplay])
 
   return (
     <div
       ref={antRef}
       className="absolute w-[1px] h-[1px] bg-red-500 transition-[left,top] duration-300"
-      style={{
-        left: `${data.position.x}px`,
-        top: `${data.position.y}px`,
-      }}
     />
   )
 }

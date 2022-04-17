@@ -42,6 +42,6 @@ export default class Crumb {
   }
 
   static toLive(crumb: Crumb) {
-    return { position: crumb.position, mass: crumb.mass }
+    return { position: crumb.position, mass: crumb.mass, id: crumb.id }
   }
 }

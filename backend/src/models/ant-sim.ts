@@ -46,7 +46,7 @@ class AntSim {
     const { ants, deadAnts, pheremones } = this.state
 
     // DEBUG ANT SPAWNING
-    while (true && ants.length < 300) {
+    while (true && ants.length < 400) {
       ants.push(
         Ant.new({
           x: Math.random() * this.config.size.x,

@@ -10,6 +10,6 @@ export type LiveAnt = {
 
 export type LiveData = {
   ants: LiveAnt[]
-  pheremones: { position: Vector2 }
-  crumbs: { position: Vector2 }
+  pheremones: { position: Vector2; id: string }[]
+  crumbs: { position: Vector2; mass: number; id: string }[]
 }

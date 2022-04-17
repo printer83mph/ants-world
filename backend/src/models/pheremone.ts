@@ -36,7 +36,7 @@ export default class Pheremone {
   }
 
   static toLive(pheremone: Pheremone) {
-    return { position: pheremone.position }
+    return { position: pheremone.position, id: pheremone.id }
   }
 
   /**

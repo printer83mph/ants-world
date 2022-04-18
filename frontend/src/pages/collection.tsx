@@ -10,11 +10,11 @@ const CollectionPage = () => {
       <Nav />
       {loading || (
         <div className="mt-24 container mx-auto px-2">
-          <h1 className="text-4xl font-semibold">🔎 Ants Collection</h1>
+          <h1 className="text-4xl font-semibold mb-6">🔎 Ants Collection</h1>
           {loggedIn ? (
             <AntList />
           ) : (
-            <div className="mt-5 text-xl text-gray-500">
+            <div className="text-xl text-gray-500">
               <Link to="/login" className="text-black drop-shadow-sm">
                 Log in
               </Link>{' '}

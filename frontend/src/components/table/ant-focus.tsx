@@ -55,7 +55,7 @@ const AntFocus = () => {
             <button
               type="button"
               className={`${
-                hasAnt ? 'border-[1px]' : 'bg-blue-500 text-white'
+                hasAnt ? 'border-[1px]' : 'bg-blue-500 text-white font-medium'
               } px-3 py-2 mt-2 rounded-md shadow hover:shadow-lg duration-100 flex gap-2`}
               onClick={hasAnt ? onRemove : onAdd}
             >

@@ -88,7 +88,8 @@ class AntSim {
     ants.forEach((ant, index) => {
       if (ant.update(this.state, this.config, dt)) {
         ants.splice(index, 1)
-        deadAnts.push(ant.dead())
+        // only add to dead ants if touched
+        if (ant.state.touched) deadAnts.push(ant.dead())
       }
     })
 

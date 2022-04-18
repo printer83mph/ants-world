@@ -28,7 +28,7 @@ const Nav = () => {
             Table
           </NavLink>
           <NavLink
-            to="/collection"
+            to={loggedIn ? '/collection' : '/login'}
             className="p-3 opacity-40 hover:opacity-90 duration-75"
           >
             Collection

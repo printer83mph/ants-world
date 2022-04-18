@@ -9,12 +9,14 @@ const TICK = 150
 const TableRouter = express.Router()
 const listeners = []
 
+let antSim
+
 Backup.findOne({}, {}, { sort: { date: -1 } }, (err, data) => {
   if (err) {
     throw err
   }
   console.log(`Loaded backup from ${data.date.toLocaleString()}`)
-  const antSim = new AntSim(JSON.parse(data.backup))
+  antSim = new AntSim(JSON.parse(data.backup))
 
   const backupSim = async () => {
     const backup = JSON.stringify(antSim.toExport())
@@ -48,6 +50,10 @@ Backup.findOne({}, {}, { sort: { date: -1 } }, (err, data) => {
     })
   })
 })
-// TODO: saving / loading ant sim from persistent storage
+
+TableRouter.get('/dead', (req, res, next) => {
+  console.log('hit route')
+  res.status(200).json({ deadAnts: antSim.state.deadAnts })
+})
 
 export default TableRouter

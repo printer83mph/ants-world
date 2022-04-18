@@ -41,6 +41,7 @@ export type AntState = {
   angle: number
   lifeLeft: number
   carrying: number
+  touched: boolean
 }
 
 export type AntGenetics = {

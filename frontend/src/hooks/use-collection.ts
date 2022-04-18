@@ -9,7 +9,6 @@ const useCollection = (username?: string) => {
 
   const loading = !data && !error
 
-  console.log(data)
   const ants = data && data.ants
 
   return { loading, ants, error, mutate }

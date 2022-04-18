@@ -1,20 +1,31 @@
-import { useContext } from 'react'
-import useSWR from 'swr'
+import { useContext, useMemo } from 'react'
 import LiveDataContext from '../../context/live-data-context'
-import { LiveAnt } from '../../types'
-import fetcher from '../../util/fetcher'
+import useCollection from '../../hooks/use-collection'
+import AntCard from './ant-card'
 
-export interface AntListProps {
-  ants: string[]
-}
+const AntList = () => {
+  const { liveData, loading: liveLoading } = useContext(LiveDataContext)
+  const {
+    loading: collectionLoading,
+    ants: collection,
+    mutate,
+  } = useCollection()
 
-const AntList = (props: AntListProps) => {
-  const { liveData } = useContext(LiveDataContext)
-  const { data, error } = useSWR('/collection', fetcher)
+  const reverso = useMemo(() => {
+    const out = collectionLoading ? [] : [...collection]
+    out.reverse()
+    return out
+  }, [collection, collectionLoading])
 
-  if (!data) return <div>Loadink</div>
+  if (liveLoading || collectionLoading) return <div>Loadink</div>
 
-  return <ul>{data.ants.map((ant) => {})}</ul>
+  return (
+    <ul className="grid grid-cols-2 lg:grid-cols-3 mt-6">
+      {reverso.map((id: string) => (
+        <AntCard id={id} liveData={liveData} key={id} mutate={mutate} />
+      ))}
+    </ul>
+  )
 }
 
 export default AntList

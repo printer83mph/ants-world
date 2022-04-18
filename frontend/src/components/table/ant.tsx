@@ -16,7 +16,7 @@ const Ant = ({ liveData, id }: AntProps) => {
   const [, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    const iv = setInterval(() => {
+    const updateAnt = () => {
       const ant = liveData.current.ants.find(({ id: antId }) => antId === id)
       // TODO: optimize this LOL
       if (!ant) return
@@ -26,7 +26,9 @@ const Ant = ({ liveData, id }: AntProps) => {
       antRef.current!.onclick = () => {
         setSearchParams(`?ant=${ant.id}`)
       }
-    }, 20)
+    }
+    const iv = setInterval(updateAnt, 100)
+    updateAnt()
     return () => clearInterval(iv)
   }, [id, liveData, setSearchParams])
 

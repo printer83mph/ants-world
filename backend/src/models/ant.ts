@@ -55,9 +55,10 @@ class Ant {
     const angle = Math.random() * Math.PI * 2
     const lifeLeft = Math.random() * (MAX_LIFE - MIN_LIFE) + MIN_LIFE
     const carrying = 0
+    const touched = false
     return new Ant(
       uuidv4(),
-      { angle, position, lifeLeft, carrying },
+      { angle, position, lifeLeft, carrying, touched },
       genetics,
       stats
     )
@@ -182,6 +183,11 @@ class Ant {
   // get a dead version of this ant
   dead(): DeadAnt {
     return { genetics: this.genetics, stats: this.stats, id: this.id }
+  }
+
+  // note we touched this ant (so it's saved in dead ants)
+  touch() {
+    this.state.touched = true
   }
 
   // export my mans

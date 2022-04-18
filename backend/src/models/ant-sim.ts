@@ -8,14 +8,6 @@ import Crumb from './crumb'
 import Nest from './nest'
 import Pheremone from './pheremone'
 
-const DEFAULT_STATE: AntSimState = {
-  ants: [],
-  deadAnts: [],
-  pheremones: [],
-  crumbs: [],
-  nests: [],
-}
-
 const DEFAULT_CONFIG: AntSimConfig = {
   size: {
     x: 500,
@@ -33,8 +25,13 @@ class AntSim {
     AntSim.allSims.push(this)
     this.config = { ...DEFAULT_CONFIG, ...config }
     // initialize state
-    const { ants, deadAnts, crumbs, pheremones, nests } = {
-      ...DEFAULT_STATE,
+    const {
+      ants = [],
+      deadAnts = [],
+      crumbs = [],
+      pheremones = [],
+      nests = [],
+    } = {
       ...cloneDeep(oldState),
     }
     this.state = {

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Vector2 } from '../types'
 
 interface Zoom {
@@ -15,8 +15,8 @@ export interface TableZoomOptions {
 }
 
 const DEFAULT_TABLE_ZOOM_OPTIONS: TableZoomOptions = {
-  minZoom: 0.75,
-  maxZoom: 15,
+  minZoom: 1,
+  maxZoom: 50,
   minBounds: { x: -250, y: -150 },
   maxBounds: { x: 250, y: 150 },
 }
@@ -25,7 +25,7 @@ const useTableZoom = (
   tableRef: React.RefObject<HTMLDivElement>,
   options: TableZoomOptions = DEFAULT_TABLE_ZOOM_OPTIONS
 ) => {
-  const zoomRef = useRef<Zoom>({ scale: 1, x: 0, y: 0 })
+  const zoomRef = useRef<Zoom>({ scale: 2.5, x: 0, y: 0 })
 
   const updateZoom = useCallback(() => {
     // we gotta update the style without big rerenders and such
@@ -81,6 +81,8 @@ const useTableZoom = (
     },
     [zoomRef, options, updateZoom]
   )
+
+  useEffect(updateZoom, [updateZoom])
 
   // TODO: maybe a "frame" function
 

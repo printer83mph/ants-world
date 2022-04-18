@@ -40,7 +40,7 @@ const Nav = () => {
               <button
                 type="button"
                 onClick={onLogout}
-                className="opacity-40 hover:opacity-90 duration-75 flex flex-row items-center gap-2"
+                className="p-3 opacity-40 hover:opacity-90 duration-75 flex flex-row items-center gap-2"
               >
                 <UserIcon />
                 {username}

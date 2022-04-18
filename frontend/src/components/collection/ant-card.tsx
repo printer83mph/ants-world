@@ -1,5 +1,6 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
 import { LiveAnt, LiveData } from '../../types'
 
 import antImage from '../../res/ant.svg'
@@ -24,6 +25,7 @@ const AntCard = (props: AntCardProps) => {
   const onRemove = async () => {
     await removeFromCollection(id)
     mutate()
+    toast.success('Removed Ant from collection!')
   }
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const AntCard = (props: AntCardProps) => {
         {dead || (
           <Link
             to={`/?ant=${id}`}
-            className="bg-blue-500 text-white text-lg px-3 py-2 rounded-md shadow hover:shadow-lg duration-100 font-medium"
+            className="bg-blue-500 text-white text-lg px-4 py-2 rounded-md shadow hover:shadow-lg duration-100 font-medium"
           >
             Go to Ant
           </Link>
@@ -78,12 +80,12 @@ const AntCard = (props: AntCardProps) => {
         <button
           type="button"
           onClick={onRemove}
-          className="text-lg hover:text-red-500 duration-100 px-3 py-2 rounded-md border-[1px] border-transparent hover:border-red-500"
+          className="text-lg hover:text-red-500 duration-100 px-4 py-2 rounded-md border-[1px] border-transparent hover:border-red-500"
         >
           Remove
         </button>
       </div>
-      <h2>{id}</h2>
+      <h3 className="text-gray-500">{id}</h3>
       {/* <p ref={statsRef} /> */}
     </li>
   )

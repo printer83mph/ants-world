@@ -109,12 +109,13 @@ class AntSim {
 
   // transform for export
   toExport() {
-    const { ants, deadAnts, crumbs, pheremones } = this.state
+    const { ants, deadAnts, crumbs, pheremones, nests } = this.state
     return {
       ants: ants.map(Ant.toExport),
       deadAnts,
       crumbs: crumbs.map(Crumb.toExport),
       pheremones: pheremones.map(Pheremone.toExport),
+      nests: nests.map(Nest.toExport),
     }
   }
 

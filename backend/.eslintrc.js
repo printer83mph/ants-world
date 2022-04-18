@@ -18,6 +18,7 @@ module.exports = {
       rules: {
         'no-use-before-define': 'off',
         'no-shadow': 'off',
+        '@typescript-eslint/no-shadow': 'warn',
         'no-console': 'off',
         'consistent-return': 'warn',
         'no-unused-vars': 'warn',

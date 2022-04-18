@@ -9,19 +9,18 @@ const TICK = 150
 const TableRouter = express.Router()
 const listeners = []
 
-let antSim
-
 Backup.findOne({}, {}, { sort: { date: -1 } }, (err, data) => {
   if (err) {
     throw err
   }
   console.log(`Loaded backup from ${data.date.toLocaleString()}`)
-  antSim = new AntSim(JSON.parse(data.backup))
+  const antSim = new AntSim(JSON.parse(data.backup))
 
   const backupSim = async () => {
     const backup = JSON.stringify(antSim.toExport())
     const backupDoc = new Backup({ date: new Date(), backup })
     await backupDoc.save()
+    console.log('Saved backup!')
     setTimeout(backupSim, oneDay * 0.5)
   }
 

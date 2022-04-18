@@ -186,7 +186,12 @@ class Ant {
 
   // export my mans
   static toExport(ant: Ant) {
-    return { state: ant.state, genetics: ant.genetics, stats: ant.stats }
+    return {
+      id: ant.id,
+      state: ant.state,
+      genetics: ant.genetics,
+      stats: ant.stats,
+    }
   }
 
   static toLive(ant: Ant) {

@@ -16,10 +16,12 @@ module.exports = {
         tsconfigRootDir: __dirname,
       },
       rules: {
-        'no-unused-vars': 'warn',
         'no-use-before-define': 'off',
         'no-shadow': 'off',
         'no-console': 'off',
+        'consistent-return': 'warn',
+        'no-unused-vars': 'warn',
+        '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/lines-between-class-members': [
           'error',
           'always',

@@ -19,13 +19,14 @@ setInterval(() => {
 }, TICK)
 
 TableRouter.ws('/', (ws) => {
-  console.log('connection opened!')
+  console.log('table connection opened!')
 
-  listeners.push((data) => ws.send(data))
+  const listener = (data) => ws.send(data)
+  listeners.push(listener)
 
   ws.on('close', () => {
-    console.log('connection closed!')
-    listeners.splice(listeners.indexOf(ws.send), 1)
+    console.log('table connection closed!')
+    listeners.splice(listeners.indexOf(listener), 1)
   })
 })
 

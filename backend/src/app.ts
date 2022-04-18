@@ -1,25 +1,55 @@
 import createError from 'http-errors'
-import express from 'express'
+import mongoose from 'mongoose'
+import express, { ErrorRequestHandler } from 'express'
+import session from 'express-session'
+import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 
 // serve static stuff from public
 // app.use(express.static(path.join(__dirname, 'public')))
 
+mongoose.connect(process.env.MONGO_URI)
+
 const app = express()
 require('express-ws')(app)
 
+const oneDay = 1000 * 60 * 60 * 24
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: oneDay * 15,
+      secure: false,
+    },
+  })
+)
+
+app.use(cors())
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 app.use('/table', require('./routes/table').default)
+app.use('/auth', require('./routes/auth').default)
 
 // catch 404 and forward to error handler
-app.use((req, res) => {
+app.use((req, res, next) => {
   res.status(404).send(createError(404, 'Route not found!'))
 })
+
+// custom error handler
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  if (!res.headersSent) {
+    res.status(500)
+  }
+  res.json({ message: err.message || 'Something went wrong!' })
+}
+app.use(errorHandler)
 
 // error handler
 // app.use((err, req, res, next) => {

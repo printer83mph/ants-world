@@ -2,7 +2,7 @@
 
 import { cloneDeep } from 'lodash'
 
-import { AntSimConfig, AntSimState } from '../types'
+import { AntSimConfig, AntSimState, DeadAnt } from '../types'
 import Ant from './ant'
 import Crumb from './crumb'
 import Nest from './nest'
@@ -118,12 +118,25 @@ class AntSim {
     }
   }
 
+  // transform for live
   toLive() {
     const { ants, crumbs } = this.state
     return {
       ants: ants.map(Ant.toLive),
       crumbs: crumbs.map(Crumb.toLive),
     }
+  }
+
+  /**
+   * Gets an ant for use in retrieving collections.
+   * @param antId - id of ant we are looking for
+   * @returns just the id if the ant is still alive, or the dead ant if dead
+   */
+  getAnt(antId: string) {
+    const deadAnt = this.state.deadAnts.find(({ id }) => antId === id)
+    if (deadAnt) return { ...deadAnt }
+    if (this.state.ants.find(({ id }) => id === antId)) return antId
+    return null
   }
 }
 

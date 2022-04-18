@@ -25,6 +25,8 @@ class Ant {
   state: AntState
   stats: AntStats
 
+  liveListeners: (() => any)[]
+
   constructor(
     id: string,
     initialState: AntState,
@@ -188,7 +190,7 @@ class Ant {
   }
 
   static toLive(ant: Ant) {
-    return { ...ant.state, id: ant.id }
+    return { ...ant.state, id: ant.id, stats: ant.stats }
   }
 }
 

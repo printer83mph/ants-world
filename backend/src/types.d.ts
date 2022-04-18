@@ -1,7 +1,17 @@
+import 'express-session'
+
 import type Ant from './models/ant'
 import type Crumb from './models/crumb'
 import type Nest from './models/nest'
 import type Pheremone from './models/pheremone'
+
+// OVERLOADING
+
+declare module 'express-session' {
+  interface SessionData {
+    username: string
+  }
+}
 
 // UTIL --------- --------- ---------
 

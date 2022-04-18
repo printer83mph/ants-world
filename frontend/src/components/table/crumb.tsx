@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect, useRef } from 'react'
-import { LiveData } from '../types'
+import { LiveData } from '../../types'
 
 export interface CrumbProps {
   liveData: MutableRefObject<LiveData>

@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect, useState } from 'react'
-import { LiveData } from '../types'
+import { LiveData } from '../../types'
 import Ant from './ant'
 
 export interface AntsProps {

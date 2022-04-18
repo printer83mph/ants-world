@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect, useState } from 'react'
-import { LiveData, Vector2 } from '../types'
+import { LiveData, Vector2 } from '../../types'
 import Crumb from './crumb'
 
 export interface CrumbsProps {

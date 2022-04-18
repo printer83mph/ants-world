@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/home'
-import StatsPage from './pages/stats'
+import CollectionPage from './pages/collection'
 
 const App = () => (
   <Routes>
     <Route path="/" element={<HomePage />} />
-    <Route path="/stats" element={<StatsPage />} />
+    <Route path="/collection" element={<CollectionPage />} />
   </Routes>
 )
 

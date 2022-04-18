@@ -45,7 +45,9 @@ const TableView = () => {
       ref={containerRef}
     >
       <div
-        className="relative w-[500px] h-[300px] bg-[linear-gradient(#f9f9f9,#fefefe)] shadow-lg"
+        className={`relative w-[500px] h-[300px] bg-[linear-gradient(#f9f9f9,#fefefe)] shadow-lg transition-opacity duration-500 ${
+          loading ? 'opacity-0' : 'opacity-100'
+        }`}
         ref={tableRef}
       >
         {loading || (

@@ -24,6 +24,7 @@ Backup.findOne({}, {}, { sort: { date: -1 } }, (err, data) => {
     await backupDoc.save()
     console.log('Saved backup!')
     setTimeout(backupSim, oneDay * 0.5)
+    // TODO: delete old backups
   }
 
   // wait 30 minutes then backup

@@ -17,10 +17,10 @@ const AntList = () => {
     return out
   }, [collection, collectionLoading])
 
-  if (liveLoading || collectionLoading) return <div>Loadink</div>
+  if (liveLoading || collectionLoading) return <ul className="opacity-0" />
 
   return (
-    <ul className="grid grid-cols-2 lg:grid-cols-3 mt-6">
+    <ul className="opacity-100 duration-100 grid grid-cols-2 lg:grid-cols-3 mt-6">
       {reverso.map((id: string) => (
         <AntCard id={id} liveData={liveData} key={id} mutate={mutate} />
       ))}

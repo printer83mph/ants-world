@@ -15,6 +15,7 @@ export interface AntCardProps {
 }
 
 const AntCard = (props: AntCardProps) => {
+  const [posting, setPosting] = useState(false)
   const { id, liveData, mutate } = props
   const [dead, setDead] = useState(false)
   const { deadAnts, loading } = useDeadAnts()
@@ -23,8 +24,9 @@ const AntCard = (props: AntCardProps) => {
   // const statsRef = useRef<HTMLDivElement>(null)
 
   const onRemove = async () => {
+    setPosting(true)
     await removeFromCollection(id)
-    mutate()
+    await mutate()
     toast.success('Removed Ant from collection!')
   }
 
@@ -60,7 +62,7 @@ const AntCard = (props: AntCardProps) => {
 
   return (
     <li className="p-6 m-3 hover:shadow-md duration-300 rounded-lg">
-      <div className="flex items-center justify-around mb-2">
+      <div className="flex items-center justify-around mb-3">
         <img
           src={dead ? deadAntImage : antImage}
           alt="Ant"
@@ -80,12 +82,15 @@ const AntCard = (props: AntCardProps) => {
         <button
           type="button"
           onClick={onRemove}
-          className="text-lg hover:text-red-500 duration-100 px-4 py-2 rounded-md border-[1px] border-transparent hover:border-red-500"
+          className={`${
+            posting && 'opacity-40'
+          } text-lg hover:text-red-500 duration-100 px-4 py-2 rounded-md border-[1px] border-transparent hover:border-red-500`}
+          disabled={posting}
         >
           Remove
         </button>
       </div>
-      <h3 className="text-gray-500">{id}</h3>
+      <h3 className="text-gray-500 font-mono">{id}</h3>
       {/* <p ref={statsRef} /> */}
     </li>
   )

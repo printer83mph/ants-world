@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useSearchParams } from 'react-router-dom'
 import { addToCollection, removeFromCollection } from '../../api/collection'
@@ -9,6 +9,7 @@ import antImage from '../../res/ant.svg'
 import { PlusIcon } from '../../res/icons'
 
 const AntFocus = () => {
+  const [posting, setPosting] = useState(false)
   const [searchParams] = useSearchParams()
   // const { loading, liveData } = useContext(LiveDataContext)
 
@@ -28,15 +29,27 @@ const AntFocus = () => {
   if (!antId || loading) return null
 
   const onAdd = async () => {
-    await addToCollection(antId)
-    mutate()
-    toast.success('Added Ant to collection!')
+    setPosting(true)
+    try {
+      await addToCollection(antId)
+      await mutate()
+      toast.success('Added Ant to collection!')
+    } catch (err) {
+      toast.error('Something went wrong.')
+    }
+    setPosting(false)
   }
 
   const onRemove = async () => {
-    await removeFromCollection(antId)
-    mutate()
-    toast.success('Remove Ant from collection.')
+    setPosting(true)
+    try {
+      await removeFromCollection(antId)
+      await mutate()
+      toast.success('Removed Ant from collection.')
+    } catch (err) {
+      toast.error('Something went wrong.')
+    }
+    setPosting(false)
   }
 
   return (
@@ -50,14 +63,17 @@ const AntFocus = () => {
           className="mt-6 mx-4 -rotate-90"
         />
         <div className="mt-4 mr-3">
-          <h2 className="text-xl">{antId}</h2>
+          <h2 className="text-xl mb-2 font-mono">{antId}</h2>
           {loggedIn ? (
             <button
               type="button"
               className={`${
                 hasAnt ? 'border-[1px]' : 'bg-blue-500 text-white font-medium'
+              } ${
+                posting && 'opacity-40'
               } px-3 py-2 mt-2 rounded-md shadow hover:shadow-lg duration-100 flex gap-2`}
               onClick={hasAnt ? onRemove : onAdd}
+              disabled={posting}
             >
               {hasAnt ? (
                 <>Remove from Collection</>

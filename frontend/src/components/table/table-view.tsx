@@ -32,20 +32,18 @@ const TableView = () => {
       className="absolute w-screen h-screen flex flex-col justify-center items-center overflow-hidden"
       ref={containerRef}
     >
-      <div
-        className={`relative w-[500px] h-[300px] bg-[linear-gradient(#f9f9f9,#fefefe)] shadow-lg transition-opacity duration-500 ${
-          loading ? 'opacity-0' : 'opacity-100'
-        }`}
-        ref={tableRef}
-      >
-        {loading || (
-          <>
-            <Ants liveData={liveData} />
-            <Crumbs liveData={liveData} />
-            {/* <Pheremones liveData={liveData} /> */}
-          </>
-        )}
-      </div>
+      {loading ? (
+        <div className="opacity-0" />
+      ) : (
+        <div
+          className="relative w-[500px] h-[300px] bg-[linear-gradient(#f9f9f9,#fefefe)] shadow-lg transition-opacity duration-500 opacity-100"
+          ref={tableRef}
+        >
+          <Ants liveData={liveData} />
+          <Crumbs liveData={liveData} />
+          {/* <Pheremones liveData={liveData} /> */}
+        </div>
+      )}
     </div>
   )
 }

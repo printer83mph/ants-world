@@ -24,7 +24,7 @@ const App = () => {
     // @ts-ignore
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <LiveDataContext.Provider value={{ loading, liveData }}>
-      <Toaster position="bottom-center" />
+      <Toaster position="bottom-right" />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/collection" element={<CollectionPage />} />

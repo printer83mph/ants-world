@@ -20,6 +20,7 @@ const LoginPage = () => {
       toast.success(`Successfully ${isLogin ? 'logged in' : 'signed up'}!`)
       navigate('/')
     } catch (err) {
+      // @ts-ignore
       if (err.response) {
         toast.error(
           isLogin
@@ -42,13 +43,13 @@ const LoginPage = () => {
           type="text"
           {...register('username', { required: true })}
           placeholder="Username"
-          className="px-2 py-1 mt-4 rounded-md outline-1 shadow-md text-lg"
+          className="px-3 py-2 mt-4 rounded-md outline-1 shadow-md text-lg"
         />
         <input
           type="password"
           {...register('password', { required: true })}
           placeholder="Password"
-          className="px-2 py-1 mt-2 rounded-md outline-1 shadow-md text-lg"
+          className="px-3 py-2 mt-2 rounded-md outline-1 shadow-md text-lg"
         />
         <button
           type="submit"

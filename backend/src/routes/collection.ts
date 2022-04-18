@@ -8,8 +8,8 @@ const CollectionRouter = express.Router()
 CollectionRouter.get('/', requireAuth(true), async (req, res, next) => {
   try {
     // @ts-ignore
-    const { user } = req.session
-    const userDoc = await User.findOne({ username: user })
+    const { username } = req.session
+    const userDoc = await User.findOne({ username })
 
     res.status(200).json({ ants: userDoc.ants })
   } catch (err) {
@@ -18,7 +18,8 @@ CollectionRouter.get('/', requireAuth(true), async (req, res, next) => {
 })
 
 // get someone else's ants collection
-CollectionRouter.get('/view', async (req, res, next) => {
+CollectionRouter.get('/:user', async (req, res, next) => {
+  // TODO: this
   try {
     const { username } = req.body
     const userDoc = await User.findOne({ username })
@@ -33,15 +34,15 @@ CollectionRouter.get('/view', async (req, res, next) => {
 CollectionRouter.post('/add', requireAuth(true), async (req, res, next) => {
   try {
     // @ts-ignore
-    const { user } = req.session
-    const { id } = req.body
-    const userDoc = await User.findOne({ username: user })
-    if (userDoc.ants.includes(id)) {
+    const { username } = req.session
+    const { antId } = req.body
+    const userDoc = await User.findOne({ username })
+    if (userDoc.ants.includes(antId)) {
       res.status(400)
       return new Error('Ant already in collection.')
     }
 
-    userDoc.ants.push(id)
+    userDoc.ants.push(antId)
     await userDoc.save()
 
     res.status(200).json({ ants: userDoc.ants })
@@ -54,15 +55,15 @@ CollectionRouter.post('/add', requireAuth(true), async (req, res, next) => {
 CollectionRouter.post('/remove', requireAuth(true), async (req, res, next) => {
   try {
     // @ts-ignore
-    const { user } = req.session
-    const { id } = req.body
-    const userDoc = await User.findOne({ username: user })
-    if (!userDoc.ants.includes(id)) {
+    const { username } = req.session
+    const { antId } = req.body
+    const userDoc = await User.findOne({ username })
+    if (!userDoc.ants.includes(antId)) {
       res.status(400)
-      return new Error('Ant does not exists.')
+      return new Error('Ant not found.')
     }
 
-    userDoc.ants.remove(id)
+    userDoc.ants.remove(antId)
     await userDoc.save()
 
     res.status(200).json({ ants: userDoc.ants })
@@ -70,3 +71,5 @@ CollectionRouter.post('/remove', requireAuth(true), async (req, res, next) => {
     return next(err)
   }
 })
+
+export default CollectionRouter

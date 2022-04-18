@@ -8,6 +8,21 @@ export type LiveAnt = {
   angle: number
   carrying: number
   id: string
+  stats: AntStats
+}
+
+export type AntStats = {
+  lifetime: number
+  distanceWalked: number
+  distanceCarried: number
+  foodDelivered: number
+}
+
+export type AntGenetics = {
+  speed: number
+  strength: number
+  pheremoneFrequency: number
+  pheremoneSensitivity: number
 }
 
 export type LiveData = {

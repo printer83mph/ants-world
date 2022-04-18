@@ -1,10 +1,12 @@
 import Nav from '../components/nav'
-import TableView from '../components/table-view'
+import AntFocus from '../components/table/ant-focus'
+import TableView from '../components/table/table-view'
 
 const HomePage = () => (
   <div>
     <Nav />
     <TableView />
+    <AntFocus />
   </div>
 )
 

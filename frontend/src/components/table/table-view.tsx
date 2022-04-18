@@ -1,7 +1,7 @@
 import { useCallback, useContext, useRef } from 'react'
-import LiveDataContext from '../context/live-data-context'
-import useControls from '../hooks/use-controls'
-import useTableZoom from '../hooks/use-table-zoom'
+import LiveDataContext from '../../context/live-data-context'
+import useControls from '../../hooks/use-controls'
+import useTableZoom from '../../hooks/use-table-zoom'
 import Ants from './ants'
 import Crumbs from './crumbs'
 

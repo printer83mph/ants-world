@@ -35,6 +35,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 app.use('/table', require('./routes/table').default)
+app.use('/collection', require('./routes/collection').default)
 app.use('/auth', require('./routes/auth').default)
 
 // catch 404 and forward to error handler

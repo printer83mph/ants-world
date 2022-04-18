@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import useSWR from 'swr'
-import LiveDataContext from '../context/live-data-context'
-import { LiveAnt } from '../types'
-import fetcher from '../util/fetcher'
+import LiveDataContext from '../../context/live-data-context'
+import { LiveAnt } from '../../types'
+import fetcher from '../../util/fetcher'
 
 export interface AntListProps {
   ants: string[]

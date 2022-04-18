@@ -1,7 +1,8 @@
 import { MutableRefObject, useEffect, useRef } from 'react'
-import { LiveData } from '../types'
+import { useSearchParams } from 'react-router-dom'
+import { LiveData } from '../../types'
 
-import antImage from '../res/ant.svg'
+import antImage from '../../res/ant.svg'
 
 export interface AntProps {
   liveData: MutableRefObject<LiveData>
@@ -9,7 +10,10 @@ export interface AntProps {
 }
 
 const Ant = ({ liveData, id }: AntProps) => {
+  // TODO: implement ant LODs
+  // TODO: ant tracking
   const antRef = useRef<HTMLDivElement>(null)
+  const [, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     const iv = setInterval(() => {
@@ -19,14 +23,19 @@ const Ant = ({ liveData, id }: AntProps) => {
       antRef.current!.style.left = `${ant.position.x - 1}px`
       antRef.current!.style.top = `${ant.position.y - 1}px`
       antRef.current!.style.transform = `rotate(${ant.angle}rad)`
+      antRef.current!.onclick = () => {
+        setSearchParams(`?ant=${ant.id}`)
+      }
     }, 20)
     return () => clearInterval(iv)
-  }, [id, liveData])
+  }, [id, liveData, setSearchParams])
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       ref={antRef}
-      className="absolute w-[2px] h-[2px] bg-cover transition-[left,top] duration-300 ease-linear"
+      className="absolute w-[2px] h-[2px] p-[3px] rounded-full bg-center transition-[left,top] duration-300 ease-linear
+      [background-repeat:no-repeat] [background-size:2px_2px] hover:bg-[rgba(0,0,0,.2)]"
       style={{ backgroundImage: `url(${antImage})` }}
     />
   )

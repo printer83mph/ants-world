@@ -1,5 +1,6 @@
 import express from 'express'
 import requireAuth from '../middlewares/requireAuth'
+import AntSim from '../models/ant-sim'
 import User from '../models/user'
 
 const CollectionRouter = express.Router()
@@ -41,6 +42,9 @@ CollectionRouter.post('/add', requireAuth(true), async (req, res, next) => {
       res.status(400)
       return new Error('Ant already in collection.')
     }
+
+    // mark for saving after death
+    AntSim.touch(antId)
 
     userDoc.ants.push(antId)
     await userDoc.save()

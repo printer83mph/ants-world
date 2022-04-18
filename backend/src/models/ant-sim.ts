@@ -27,7 +27,10 @@ class AntSim {
   state: AntSimState
   config: AntSimConfig
 
+  static allSims: AntSim[] = []
+
   constructor(oldState?: AntSimState, config?: AntSimConfig) {
+    AntSim.allSims.push(this)
     this.config = { ...DEFAULT_CONFIG, ...config }
     // initialize state
     const { ants, deadAnts, crumbs, pheremones, nests } = {
@@ -139,6 +142,16 @@ class AntSim {
     if (deadAnt) return { ...deadAnt }
     if (this.state.ants.find(({ id }) => id === antId)) return antId
     return null
+  }
+
+  static touch(id: string) {
+    AntSim.allSims.forEach((sim) => {
+      sim.state.ants.forEach((ant) => {
+        if (ant.id === id) {
+          ant.touch()
+        }
+      })
+    })
   }
 }
 

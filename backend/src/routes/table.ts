@@ -52,7 +52,6 @@ Backup.findOne({}, {}, { sort: { date: -1 } }, (err, data) => {
 })
 
 TableRouter.get('/dead', (req, res, next) => {
-  console.log('hit route')
   res.status(200).json({ deadAnts: antSim.state.deadAnts })
 })
 

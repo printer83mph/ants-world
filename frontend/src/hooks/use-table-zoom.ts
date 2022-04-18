@@ -15,8 +15,8 @@ export interface TableZoomOptions {
 }
 
 const DEFAULT_TABLE_ZOOM_OPTIONS: TableZoomOptions = {
-  minZoom: 0.5,
-  maxZoom: 10,
+  minZoom: 0.75,
+  maxZoom: 15,
   minBounds: { x: -250, y: -150 },
   maxBounds: { x: 250, y: 150 },
 }

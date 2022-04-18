@@ -1,24 +1,25 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import useControls from '../hooks/use-controls'
 import useLiveData from '../hooks/use-live-data'
 import useTableZoom from '../hooks/use-table-zoom'
 import { LiveData } from '../types'
 import Ants from './ants'
+import Crumbs from './crumbs'
 
 const TableView = () => {
   const tableRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const { pan, zoom } = useTableZoom(tableRef)
 
-  const [liveData, setLiveData] = useState<LiveData>({
+  const liveData = useRef<LiveData>({
     ants: [],
     crumbs: [],
     pheremones: [],
   })
 
-  useLiveData<LiveData>(
+  const { loading } = useLiveData<LiveData>(
     useCallback((newLiveData) => {
-      setLiveData(newLiveData)
+      liveData.current = newLiveData
     }, [])
   )
 
@@ -44,10 +45,16 @@ const TableView = () => {
       ref={containerRef}
     >
       <div
-        className="relative w-[500px] h-[300px] bg-[linear-gradient(black,gray)]"
+        className="relative w-[500px] h-[300px] bg-[linear-gradient(#f9f9f9,#fefefe)] shadow-lg"
         ref={tableRef}
       >
-        <Ants liveData={liveData} />
+        {loading || (
+          <>
+            <Ants liveData={liveData} />
+            <Crumbs liveData={liveData} />
+            {/* <Pheremones liveData={liveData} /> */}
+          </>
+        )}
       </div>
     </div>
   )

@@ -9,6 +9,8 @@ import type {
   Vector2,
 } from '../types'
 import Crumb from './crumb'
+import Nest from './nest'
+import Pheremone from './pheremone'
 
 import Vector from './util/vector'
 
@@ -37,10 +39,10 @@ class Ant {
 
   static new(position: Vector2) {
     const genetics: AntGenetics = {
-      speed: randomGenetic() * 0.007,
+      speed: randomGenetic(),
       strength: randomGenetic(),
       pheremoneFrequency: randomGenetic(),
-      pheremoneSensitivity: randomGenetic() * 50,
+      pheremoneSensitivity: randomGenetic(),
     }
     const stats: AntStats = {
       distanceCarried: 0,
@@ -50,7 +52,13 @@ class Ant {
     }
     const angle = Math.random() * Math.PI * 2
     const lifeLeft = Math.random() * (MAX_LIFE - MIN_LIFE) + MIN_LIFE
-    return new Ant(uuidv4(), { angle, position, lifeLeft }, genetics, stats)
+    const carrying = 0
+    return new Ant(
+      uuidv4(),
+      { angle, position, lifeLeft, carrying },
+      genetics,
+      stats
+    )
   }
 
   static copy({ id, state, genetics, stats }: Ant) {
@@ -66,46 +74,88 @@ class Ant {
    */
   update(simState: AntSimState, simConfig: AntSimConfig, dt: number) {
     const { state, genetics } = this
-    const { position } = state
 
     // calculate the angle weight (complicated and stupid)
     let angleWeight = 0
 
-    const forwardTargets = [...simState.pheremones, ...simState.crumbs].filter(
-      (target) =>
-        Vector.dot(
-          Vector.sub(target.position, position),
-          Vector.unit(state.angle)
-        ) > 0
-    )
+    const allTargets =
+      state.carrying === 0
+        ? [...simState.pheremones, ...simState.crumbs]
+        : [...simState.pheremones, ...simState.nests]
 
-    const closeTargets = forwardTargets.filter(
-      (target) =>
-        Vector.sqrMagnitude(Vector.sub(position, target.position)) <
-        genetics.pheremoneSensitivity ** 2
-    )
+    const forwardVector = Vector.unit(state.angle)
+    const rightVector = Vector.unit(state.angle + Math.PI / 2)
 
-    closeTargets.forEach((target) => {
-      const rightVector = Vector.unit(state.angle + Math.PI / 2)
-      const onRight =
-        Vector.dot(rightVector, Vector.sub(target.position, position)) > 0
+    allTargets.forEach((target) => {
+      const diffVector = Vector.sub(target.position, state.position)
+
+      // filter out guys behind
+      if (Vector.dot(diffVector, forwardVector) < 0) return
+
+      // filter out guys out of radius
+      if (
+        Vector.sqrMagnitude(Vector.sub(state.position, target.position)) >
+        (genetics.pheremoneSensitivity * 80) ** 2
+      ) {
+        return
+      }
+
+      const onRight = Vector.dot(rightVector, diffVector) > 0
       // add weight based on direction + type of target
-      angleWeight += (onRight ? 1 : -1) * (target instanceof Crumb ? 5 : 1)
+      angleWeight +=
+        (onRight ? 1 : -1) *
+        (target instanceof Crumb || target instanceof Nest ? 45 : 1)
     })
 
-    const randomTurning =
-      (Math.random() * 1 - 0.5) / (Math.abs(angleWeight) + 1)
+    const randomTurning = (Math.random() - 0.5) / (Math.abs(angleWeight) + 1)
 
     // update angle
-    state.angle += (randomTurning + angleWeight * 0.05) * genetics.speed * dt
+    state.angle +=
+      (randomTurning + angleWeight * 0.002 * genetics.pheremoneSensitivity) *
+      genetics.speed *
+      0.007 *
+      dt
 
     // clamp angle
     state.angle %= Math.PI * 2
 
+    // try take food
+    if (state.carrying === 0) {
+      for (let index = 0; index < simState.crumbs.length; index += 1) {
+        const crumb = simState.crumbs[index]
+        if (
+          Vector.sqrMagnitude(Vector.sub(crumb.position, state.position)) < 7
+        ) {
+          state.carrying = Math.min(genetics.strength * 3, crumb.mass)
+          if (crumb.takeMass(state.carrying)) {
+            simState.crumbs.splice(index, 1)
+          }
+          state.angle += Math.PI
+          break
+        }
+      }
+    } else {
+      for (let index = 0; index < simState.nests.length; index += 1) {
+        const nest = simState.nests[index]
+        if (
+          Vector.sqrMagnitude(Vector.sub(nest.position, state.position)) < 7
+        ) {
+          state.carrying = 0
+          state.angle += Math.PI
+          break
+        }
+      }
+
+      // try drop pheremones
+      if (Math.random() < (1 / dt) * 3) {
+        simState.pheremones.push(Pheremone.new(state.position))
+      }
+    }
+
     // update position
     const newPos = Vector.add(
       state.position,
-      Vector.scale(Vector.unit(state.angle), genetics.speed * dt)
+      Vector.scale(Vector.unit(state.angle), genetics.speed * 0.007 * dt)
     )
 
     // clamp position + bounce
@@ -120,8 +170,6 @@ class Ant {
     }
 
     state.position = newPos
-
-    // TODO: try take food, manage food state
 
     // remove life
     state.lifeLeft -= Math.random() * randomGenetic() * dt

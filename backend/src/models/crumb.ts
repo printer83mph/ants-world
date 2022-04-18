@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 import type { Vector2 } from '../types'
 
-const MIN_MASS = 5
-const MAX_MASS = 20
+const MIN_MASS = 40
+const MAX_MASS = 3000
 
 export default class Crumb {
   id: string
@@ -30,7 +30,7 @@ export default class Crumb {
   /**
    * Take some mass from this crumb.
    * @param mass - desired mass to take from this crumb
-   * @returns the amount of mass taken
+   * @returns whether we should remove this crumb
    */
   takeMass(mass: number) {
     this.mass -= mass

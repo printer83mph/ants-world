@@ -1,5 +1,6 @@
 import type Ant from './models/ant'
 import type Crumb from './models/crumb'
+import type Nest from './models/nest'
 import type Pheremone from './models/pheremone'
 
 // UTIL --------- --------- ---------
@@ -16,6 +17,7 @@ export type AntSimState = {
   deadAnts: DeadAnt[]
   pheremones: Pheremone[]
   crumbs: Crumb[]
+  nests: Nest[]
 }
 
 export interface AntSimConfig {
@@ -28,6 +30,7 @@ export type AntState = {
   position: Vector2
   angle: number
   lifeLeft: number
+  carrying: number
 }
 
 export type AntGenetics = {

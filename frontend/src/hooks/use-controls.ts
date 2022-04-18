@@ -15,6 +15,7 @@ const useControls = (
   onPan: (dX: number, dY: number) => void
 ) => {
   const keysDown = useRef<string[]>([])
+  const animFrame = useRef<number>()
 
   const handleScroll = useCallback(
     (evt: WheelEvent) => {
@@ -54,17 +55,21 @@ const useControls = (
 
   useEffect(() => {
     const current = ref.current!
+    const animationFrame = () => {
+      updatePan()
+      animFrame.current = window.requestAnimationFrame(animationFrame)
+    }
     current.addEventListener('wheel', handleScroll)
+    animFrame.current = window.requestAnimationFrame(animationFrame)
     window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('keyup', handleKeyUp)
-    const handle = setInterval(updatePan, 16)
     return () => {
       current.removeEventListener('wheel', handleScroll)
       window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('keyup', handleKeyUp)
-      clearInterval(handle)
+      window.cancelAnimationFrame(animFrame.current!)
     }
-  }, [ref, handleScroll, handleKeyDown, handleKeyUp, updatePan])
+  }, [handleKeyDown, handleKeyUp, handleScroll, ref, updatePan])
 }
 
 export default useControls

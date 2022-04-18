@@ -5,6 +5,8 @@ export type Vector2 = {
 
 export type LiveAnt = {
   position: Vector2
+  angle: number
+  carrying: number
   id: string
 }
 

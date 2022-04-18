@@ -1,7 +1,7 @@
 import express from 'express'
 import AntSim from '../models/ant-sim'
 
-const TICK = 100
+const TICK = 150
 
 const TableRouter = express.Router()
 const listeners = []

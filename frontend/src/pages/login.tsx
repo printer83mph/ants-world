@@ -36,7 +36,7 @@ const LoginPage = () => {
   return (
     <div className="mx-auto mt-[10vh] max-w-md px-2">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col p-5">
-        <h1 className="text-3xl font-semibold">
+        <h1 className="text-4xl font-semibold tracking-tight">
           🐜 {isLogin ? 'Log In' : 'Sign Up'}
         </h1>
         <input
@@ -58,7 +58,7 @@ const LoginPage = () => {
           {isLogin ? 'Log In to AntsWorld' : 'Create an AntsWorld Account'}
         </button>
 
-        <div className="mt-5 mx-auto flex flex-row gap-1 text-gray-500">
+        <div className="mt-5 mx-auto flex flex-row gap-1 text-gray-500 tracking-wide">
           {isLogin ? `New to AntsWorld?` : `Already have an account?`}
           <Link to={isLogin ? '/signup' : '/login'} className="text-black">
             {isLogin ? 'Create an account' : 'Log in'}.

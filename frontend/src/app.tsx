@@ -7,6 +7,8 @@ import LiveDataContext from './context/live-data-context'
 import useLiveData from './hooks/use-live-data'
 import { LiveData } from './types'
 import LoginPage from './pages/login'
+import NotFoundPage from './pages/not-found'
+import OtherCollectionPage from './pages/other-collection'
 
 const App = () => {
   const liveData = useRef<LiveData>({
@@ -28,9 +30,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/collection" element={<CollectionPage />} />
-        <Route path="/collection/:username" element={<div>HEHEHAH</div>} />
+        <Route path="/collection/:username" element={<OtherCollectionPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </LiveDataContext.Provider>
   )

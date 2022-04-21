@@ -3,7 +3,7 @@ import fetcher from '../util/fetcher'
 
 const useCollection = (username?: string) => {
   const { data, error, mutate } = useSWR(
-    `/collection${username ? `/${username}` : ''}`,
+    `/collection-api${username ? `/${username}` : ''}`,
     fetcher
   )
 

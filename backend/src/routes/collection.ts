@@ -19,10 +19,10 @@ CollectionRouter.get('/', requireAuth(true), async (req, res, next) => {
 })
 
 // get someone else's ants collection
-CollectionRouter.get('/:user', async (req, res, next) => {
-  // TODO: this
+CollectionRouter.get('/:username', async (req, res, next) => {
   try {
-    const { username } = req.body
+    // @ts-ignore
+    const { username } = req.params
     const userDoc = await User.findOne({ username })
 
     res.status(200).json({ ants: userDoc.ants })

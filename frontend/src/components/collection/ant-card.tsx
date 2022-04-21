@@ -12,11 +12,13 @@ export interface AntCardProps {
   id: string
   liveData: MutableRefObject<LiveData>
   mutate: () => any
+  isOwner: boolean
 }
 
 const AntCard = (props: AntCardProps) => {
+  const { id, liveData, mutate, isOwner } = props
+
   const [posting, setPosting] = useState(false)
-  const { id, liveData, mutate } = props
   const [dead, setDead] = useState(false)
   const { deadAnts, loading } = useDeadAnts()
 
@@ -79,16 +81,18 @@ const AntCard = (props: AntCardProps) => {
             Go to Ant
           </Link>
         )}
-        <button
-          type="button"
-          onClick={onRemove}
-          className={`${
-            posting && 'opacity-40'
-          } text-lg hover:text-red-500 duration-100 px-4 py-2 rounded-md border-[1px] border-transparent hover:border-red-500`}
-          disabled={posting}
-        >
-          Remove
-        </button>
+        {isOwner && (
+          <button
+            type="button"
+            onClick={onRemove}
+            className={`${
+              posting && 'opacity-40'
+            } text-lg hover:text-red-500 duration-100 px-4 py-2 rounded-md border-[1px] border-transparent hover:border-red-500`}
+            disabled={posting}
+          >
+            Remove
+          </button>
+        )}
       </div>
       <h3 className="text-gray-500 font-mono">{id}</h3>
       {/* <p ref={statsRef} /> */}

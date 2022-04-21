@@ -1,10 +1,10 @@
-import createError from 'http-errors'
 import mongoose from 'mongoose'
 import express, { ErrorRequestHandler } from 'express'
 import session from 'express-session'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
+import path from 'path'
 
 // serve static stuff from public
 // app.use(express.static(path.join(__dirname, 'public')))
@@ -35,11 +35,15 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 app.use('/table', require('./routes/table').default)
-app.use('/collection', require('./routes/collection').default)
+app.use('/collection-api', require('./routes/collection').default)
 app.use('/auth', require('./routes/auth').default)
 
 // serve frontend
 app.use(express.static('../frontend/dist'))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'))
+})
 
 // custom error handler
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {

@@ -11,16 +11,19 @@ export interface AntListProps {
 const AntList = ({ username }: AntListProps) => {
   const { liveData, loading: liveLoading } = useContext(LiveDataContext)
   const {
+    error,
     loading: collectionLoading,
     ants: collection,
     mutate,
   } = useCollection(username)
 
   const reverso = useMemo(() => {
-    const out = collectionLoading ? [] : [...collection]
+    const out = error || collectionLoading ? [] : [...collection]
     out.reverse()
     return out
-  }, [collection, collectionLoading])
+  }, [collection, collectionLoading, error])
+
+  if (error) return <div className="text-xl">404 - User not found.</div>
 
   if (liveLoading || collectionLoading) return <ul className="opacity-0" />
 

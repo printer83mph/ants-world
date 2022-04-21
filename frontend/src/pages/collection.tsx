@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AntList from '../components/collection/ant-list'
 import Nav from '../components/nav'
 import useAuth from '../hooks/use-auth'

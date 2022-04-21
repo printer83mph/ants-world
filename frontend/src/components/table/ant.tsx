@@ -13,15 +13,16 @@ const Ant = ({ liveData, id }: AntProps) => {
   // TODO: implement ant LODs
   // TODO: ant tracking
   const antRef = useRef<HTMLDivElement>(null)
-  const [, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const selected = searchParams.get('ant') === id
 
   useEffect(() => {
     const updateAnt = () => {
       const ant = liveData.current.ants.find(({ id: antId }) => antId === id)
       // TODO: optimize this LOL (probably need rewrite using listeners and such)
       if (!ant) return
-      antRef.current!.style.left = `${ant.position.x - 1}px`
-      antRef.current!.style.top = `${ant.position.y - 1}px`
+      antRef.current!.style.left = `${ant.position.x - 2.5}px`
+      antRef.current!.style.top = `${ant.position.y - 2.5}px`
       antRef.current!.style.transform = `rotate(${ant.angle}rad)`
       antRef.current!.onclick = () => {
         setSearchParams(`?ant=${ant.id}`)
@@ -36,8 +37,10 @@ const Ant = ({ liveData, id }: AntProps) => {
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
       ref={antRef}
-      className="absolute w-[2px] h-[2px] p-[3px] rounded-full bg-center transition-[left,top] duration-300 ease-linear
-      [background-repeat:no-repeat] [background-size:2px_2px] hover:bg-[rgba(0,0,0,.2)]"
+      className={`absolute w-[2px] h-[2px] p-[3px] rounded-full bg-center transition-[left,top] duration-300 ease-linear
+      [background-repeat:no-repeat] [background-size:2px_2px] hover:bg-[rgba(0,0,0,.2)] ${
+        selected ? 'bg-[rgba(0,0,255,.12)]' : ''
+      }`}
       style={{ backgroundImage: `url(${antImage})` }}
     />
   )

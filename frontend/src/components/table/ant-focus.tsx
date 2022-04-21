@@ -6,11 +6,11 @@ import useAuth from '../../hooks/use-auth'
 import useCollection from '../../hooks/use-collection'
 
 import antImage from '../../res/ant.svg'
-import { PlusIcon } from '../../res/icons'
+import { PlusIcon, XIcon } from '../../res/icons'
 
 const AntFocus = () => {
   const [posting, setPosting] = useState(false)
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   // const { loading, liveData } = useContext(LiveDataContext)
 
   const { loading, ants, mutate } = useCollection()
@@ -54,7 +54,7 @@ const AntFocus = () => {
 
   return (
     <div className="absolute flex bottom-0 w-full">
-      <div className="mx-auto h-40 pb-10 bg-white shadow-lg rounded-t-xl w-96 flex flex-row">
+      <div className="mx-auto h-40 pb-10 bg-white shadow-lg rounded-t-xl w-[26rem] flex flex-row">
         <img
           src={antImage}
           width={100}
@@ -63,7 +63,16 @@ const AntFocus = () => {
           className="mt-6 mx-4 -rotate-90"
         />
         <div className="mt-4 mr-3">
-          <h2 className="text-xl mb-2 font-mono">{antId}</h2>
+          <div className="flex items-start">
+            <h2 className="text-xl mb-2 font-mono">{antId}</h2>
+            <button
+              type="button"
+              onClick={() => setSearchParams('')}
+              className="opacity-40 hover:opacity-100 hover:drop-shadow-lg duration-100"
+            >
+              <XIcon />
+            </button>
+          </div>
           {loggedIn ? (
             <button
               type="button"

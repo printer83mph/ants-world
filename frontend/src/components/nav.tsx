@@ -1,5 +1,6 @@
 import toast from 'react-hot-toast'
 import { Link, NavLink } from 'react-router-dom'
+
 import { logout } from '../api/auth'
 import useAuth from '../hooks/use-auth'
 import { UserAddIcon, UserIcon } from '../res/icons'

@@ -1,8 +1,8 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import { LiveAnt, LiveData } from '../../types'
 
+import type { LiveAnt, LiveData } from '../../types'
 import antImage from '../../res/ant.svg'
 import deadAntImage from '../../res/dead_ant.png'
 import useDeadAnts from '../../hooks/use-dead-ants'

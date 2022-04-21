@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+
 import AntList from '../components/collection/ant-list'
 import Nav from '../components/nav'
 import useAuth from '../hooks/use-auth'
@@ -10,12 +12,21 @@ const CollectionPage = () => {
       <Nav />
       {loading || (
         <div className="mt-24 container mx-auto px-2 [max-height:calc(100vh-6rem)] overflow-y-scroll">
-          <h1 className="text-4xl font-semibold tracking-tight">
+          <motion.h1
+            className="text-4xl font-semibold tracking-tight"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             🔎 Ants Collection
-          </h1>
+          </motion.h1>
           {loggedIn ? (
             <>
-              <p className="my-5 text-gray-500 tracking-wide">
+              <motion.p
+                className="my-5 text-gray-500 tracking-wide"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
                 Collection Link:{' '}
                 <Link
                   to={`/collection/${username}`}
@@ -23,7 +34,7 @@ const CollectionPage = () => {
                 >
                   http://{window.location.host}/collection/{username}
                 </Link>
-              </p>
+              </motion.p>
               <AntList />
             </>
           ) : (

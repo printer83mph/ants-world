@@ -1,4 +1,6 @@
 import { useCallback, useContext, useRef } from 'react'
+import { motion } from 'framer-motion'
+
 import LiveDataContext from '../../context/live-data-context'
 import useControls from '../../hooks/use-controls'
 import useTableZoom from '../../hooks/use-table-zoom'
@@ -8,6 +10,7 @@ import Crumbs from './crumbs'
 const TableView = () => {
   const tableRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+
   const { pan, zoom } = useTableZoom(tableRef)
   const { loading, liveData } = useContext(LiveDataContext)
 
@@ -28,21 +31,25 @@ const TableView = () => {
   )
 
   return (
-    <div
-      className={`absolute w-screen h-screen flex flex-col justify-center items-center overflow-hidden ${
-        loading ? 'opacity-0' : 'opacity-100'
-      } duration-500`}
+    <motion.div
+      className="absolute w-screen h-screen flex flex-col justify-center items-center overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       ref={containerRef}
     >
       <div
         className="relative w-[500px] h-[300px] bg-[linear-gradient(#f9f9f9,#fefefe)] shadow-lg"
         ref={tableRef}
       >
-        <Ants liveData={liveData} />
-        <Crumbs liveData={liveData} />
-        {/* <Pheremones liveData={liveData} /> */}
+        {loading || (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <Ants liveData={liveData} />
+            <Crumbs liveData={liveData} />
+            {/* <Pheremones liveData={liveData} /> */}
+          </motion.div>
+        )}{' '}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -38,10 +38,8 @@ app.use('/table', require('./routes/table').default)
 app.use('/collection', require('./routes/collection').default)
 app.use('/auth', require('./routes/auth').default)
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  res.status(404).send(createError(404, 'Route not found!'))
-})
+// serve frontend
+app.use(express.static('../frontend/dist'))
 
 // custom error handler
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {

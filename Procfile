@@ -1,1 +1,1 @@
-web: yarn workspace backend build && yarn workspace backend start
+web: yarn workspace backend build && yarn workspace frontend build && yarn workspace backend start

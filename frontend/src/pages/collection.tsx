@@ -9,21 +9,25 @@ const CollectionPage = () => {
     <>
       <Nav />
       {loading || (
-        <div className="mt-24 container mx-auto px-2">
-          <h1 className="text-4xl font-semibold">🔎 Ants Collection</h1>
-          <p className="my-5 text-gray-500">
-            Collection Link:{' '}
-            <Link
-              to={`/collection/${username}`}
-              className="hover:text-black hover:drop-shadow-md duration-100"
-            >
-              http://{window.location.host}/collection/{username}
-            </Link>
-          </p>
+        <div className="mt-24 container mx-auto px-2 [max-height:calc(100vh-6rem)] overflow-y-scroll">
+          <h1 className="text-4xl font-semibold tracking-tight">
+            🔎 Ants Collection
+          </h1>
           {loggedIn ? (
-            <AntList />
+            <>
+              <p className="my-5 text-gray-500 tracking-wide">
+                Collection Link:{' '}
+                <Link
+                  to={`/collection/${username}`}
+                  className="hover:text-black hover:drop-shadow-md duration-100"
+                >
+                  http://{window.location.host}/collection/{username}
+                </Link>
+              </p>
+              <AntList />
+            </>
           ) : (
-            <div className="text-xl text-gray-500">
+            <div className="text-xl text-gray-500 mt-5">
               <Link to="/login" className="text-black drop-shadow-sm">
                 Log in
               </Link>{' '}

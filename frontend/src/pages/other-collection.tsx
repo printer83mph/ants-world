@@ -7,7 +7,7 @@ const OtherCollectionPage = () => {
   return (
     <>
       <Nav />
-      <div className="mt-24 container mx-auto px-2">
+      <div className="mt-24 container mx-auto px-2 [max-height:calc(100vh-6rem)] overflow-y-scroll">
         <h1 className="text-4xl font-semibold mb-6">
           🔎 {username}&apos;s Ants Collection
         </h1>

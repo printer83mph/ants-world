@@ -1,6 +1,8 @@
 import { MutableRefObject, useEffect, useRef } from 'react'
 import { LiveData } from '../../types'
 
+import crumbImage from '../../res/crumb.png'
+
 export interface CrumbProps {
   liveData: MutableRefObject<LiveData>
   id: string
@@ -33,7 +35,8 @@ const Crumb = ({ liveData, id }: CrumbProps) => {
   return (
     <div
       ref={crumbRef}
-      className="absolute bg-blue-500 transform-[translate(-50%,-50%)]"
+      className="absolute bg-cover [transform:translate(-50%,-50%)]"
+      style={{ backgroundImage: `url(${crumbImage})` }}
     />
   )
 }

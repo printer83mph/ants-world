@@ -18,7 +18,7 @@ const Ant = ({ liveData, id }: AntProps) => {
   useEffect(() => {
     const updateAnt = () => {
       const ant = liveData.current.ants.find(({ id: antId }) => antId === id)
-      // TODO: optimize this LOL
+      // TODO: optimize this LOL (probably need rewrite using listeners and such)
       if (!ant) return
       antRef.current!.style.left = `${ant.position.x - 1}px`
       antRef.current!.style.top = `${ant.position.y - 1}px`
